@@ -395,11 +395,11 @@ export default function ProfilePage() {
                         </Button>
                       </div>
                     </div>
-                    <Table>
+                    <Table className="w-full table-fixed">
                       <TableHeader>
                         <TableRow>
-                          <TableHead>Field</TableHead>
-                          <TableHead>Value</TableHead>
+                          <TableHead className="w-1/3">Field</TableHead>
+                          <TableHead className="w-2/3">Value</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -460,11 +460,11 @@ export default function ProfilePage() {
                         </Button>
                       </div>
                     </div>
-                    <Table>
+                    <Table className="w-full table-fixed">
                       <TableHeader>
                         <TableRow>
-                          <TableHead>Field</TableHead>
-                          <TableHead>Value</TableHead>
+                          <TableHead className="w-1/3">Field</TableHead>
+                          <TableHead className="w-2/3">Value</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -529,11 +529,11 @@ export default function ProfilePage() {
                         </Button>
                       </div>
                     </div>
-                    <Table>
+                    <Table className="w-full table-fixed">
                       <TableHeader>
                         <TableRow>
-                          <TableHead>Field</TableHead>
-                          <TableHead>Value</TableHead>
+                          <TableHead className="w-1/3">Field</TableHead>
+                          <TableHead className="w-2/3">Value</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -557,7 +557,7 @@ export default function ProfilePage() {
                           <TableCell className="font-medium">
                             Education Level
                           </TableCell>
-                          <TableCell>Bachelor's Degree</TableCell>
+                          <TableCell>Bachelor&apos;s Degree</TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell className="font-medium">
