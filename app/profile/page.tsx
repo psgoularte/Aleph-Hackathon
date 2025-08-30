@@ -204,8 +204,8 @@ export default function ProfilePage() {
                 <SelectContent>
                   <SelectItem value="high-school">High School</SelectItem>
                   <SelectItem value="some-college">Some College</SelectItem>
-                  <SelectItem value="bachelors">Bachelor's Degree</SelectItem>
-                  <SelectItem value="masters">Master's Degree</SelectItem>
+                  <SelectItem value="bachelors">Bachelors Degree</SelectItem>
+                  <SelectItem value="masters">Masters Degree</SelectItem>
                   <SelectItem value="doctorate">Doctorate</SelectItem>
                 </SelectContent>
               </Select>
