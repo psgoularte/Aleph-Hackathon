@@ -3,6 +3,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
 :root {
   --background: oklch(0.11 0 0); /* Black background */
   --foreground: oklch(0.98 0 0); /* White text */

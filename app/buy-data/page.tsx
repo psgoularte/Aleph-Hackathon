@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,10 +46,16 @@ export default function BuyDataPage() {
       <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <Database className="h-8 w-8 text-primary" />
+            <div className="flex items-center space-x-1">
+            <Image
+                    src="/logo-ethera.png"  
+                    alt="Ethera"
+                    width={64}
+                    height={64}
+                    priority
+                  />
               <span className="text-xl font-bold text-foreground">
-                DataChain
+                Ethera
               </span>
             </div>
             <div className="hidden md:flex fixed-center items-center space-x-6">
