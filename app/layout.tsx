@@ -1,28 +1,22 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import ClientWrapper from "./clientwrapper";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import type React from "react" // Import React
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "LenDeFi",
-  description: "DeFi Lending Platform",
-};
+
+  title: "AI Prompt Marketplace",
+  description: "Buy and sell AI prompts securely on the blockchain",
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <body
@@ -33,5 +27,5 @@ export default function RootLayout({
         </main>
       </body>
     </html>
-  );
+  )
 }
