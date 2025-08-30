@@ -264,7 +264,7 @@ export default function HomePage() {
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why Choose DataChain?
+              Why Choose Ethera?
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Built on blockchain technology for maximum security, transparency,
@@ -273,7 +273,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="border-border">
+            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer group">
               <CardHeader>
                 <Shield className="h-12 w-12 text-primary mb-4" />
                 <CardTitle>Blockchain Security</CardTitle>
@@ -284,7 +284,7 @@ export default function HomePage() {
               </CardHeader>
             </Card>
 
-            <Card className="border-border">
+            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer group">
               <CardHeader>
                 <TrendingUp className="h-12 w-12 text-primary mb-4" />
                 <CardTitle>Fair Pricing</CardTitle>
@@ -295,7 +295,7 @@ export default function HomePage() {
               </CardHeader>
             </Card>
 
-            <Card className="border-border">
+            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer group">
               <CardHeader>
                 <Users className="h-12 w-12 text-primary mb-4" />
                 <CardTitle>Trusted Network</CardTitle>
@@ -306,7 +306,7 @@ export default function HomePage() {
               </CardHeader>
             </Card>
 
-            <Card className="border-border">
+            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer group">
               <CardHeader>
                 <Lock className="h-12 w-12 text-primary mb-4" />
                 <CardTitle>Privacy Control</CardTitle>
@@ -317,7 +317,7 @@ export default function HomePage() {
               </CardHeader>
             </Card>
 
-            <Card className="border-border">
+            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer group">
               <CardHeader>
                 <Zap className="h-12 w-12 text-primary mb-4" />
                 <CardTitle>Instant Payments</CardTitle>
@@ -328,7 +328,7 @@ export default function HomePage() {
               </CardHeader>
             </Card>
 
-            <Card className="border-border">
+            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer group">
               <CardHeader>
                 <Database className="h-12 w-12 text-primary mb-4" />
                 <CardTitle>Data Analytics</CardTitle>
@@ -341,6 +341,53 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+{/* Tech Section – lighter background again */}
+<section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/20">
+  <div className="container mx-auto">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+        Built with Zama & V0
+      </h2>
+      <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+        Our stack combines privacy with speed: confidential computing for identity and governance,
+        and a front-end generated and iterated quickly for the MVP.
+      </p>
+    </div>
+
+    <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      {/* Zama / Privacy */}
+      <Card className="border-border hover:border-primary/50 transition-colors">
+        <CardHeader>
+          <div className="mb-4">
+            <Lock className="h-12 w-12 text-primary" />
+          </div>
+          <CardTitle>Privacy & Governance with Zama</CardTitle>
+          <CardDescription>
+            We leverage confidential computing principles to preserve data privacy and enable
+            identity and governance flows without exposing sensitive information.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      {/* V0 / Front-end */}
+      <Card className="border-border hover:border-primary/50 transition-colors">
+        <CardHeader>
+          <div className="mb-4">
+            <Zap className="h-12 w-12 text-primary" />
+          </div>
+          <CardTitle>Front-end with V0 by Vercel</CardTitle>
+          <CardDescription>
+            The front-end was prototyped and iterated using V0 to speed up development:
+            clean layout, reusable components, and fast deploy for the MVP.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  </div>
+
+</section>
+
     </div>
   );
 }
