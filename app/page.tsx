@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -103,7 +105,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer group">
               <CardHeader className="text-center">
-                <Heart className="h-16 w-16 text-primary mx-auto mb-4" />
+                <Heart className="h-16 w-16 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
                 <CardTitle className="text-xl">Health Data</CardTitle>
                 <CardDescription className="text-center">
                   Medical records, fitness data, health metrics, and wellness
@@ -133,7 +135,7 @@ export default function HomePage() {
 
             <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer group">
               <CardHeader className="text-center">
-                <Users className="h-16 w-16 text-primary mx-auto mb-4" />
+                <Users className="h-16 w-16 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
                 <CardTitle className="text-xl">Identity Data</CardTitle>
                 <CardDescription className="text-center">
                   Personal information, demographics, preferences, and
@@ -208,10 +210,10 @@ export default function HomePage() {
               {/* Step 3 */}
               <div className="text-center">
                 <div className="relative">
-                  <div className="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
                     <TrendingUp className="h-10 w-10 text-white" />
                   </div>
-                  <Badge className="absolute -top-2 -right-2 bg-secondary text-white">
+                  <Badge className="absolute -top-2 -right-2 bg-primary text-white">
                     3
                   </Badge>
                 </div>
@@ -226,10 +228,10 @@ export default function HomePage() {
               {/* Step 4 */}
               <div className="text-center">
                 <div className="relative">
-                  <div className="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
                     <Zap className="h-10 w-10 text-white" />
                   </div>
-                  <Badge className="absolute -top-2 -right-2 bg-secondary text-white">
+                  <Badge className="absolute -top-2 -right-2 bg-primary text-white">
                     4
                   </Badge>
                 </div>

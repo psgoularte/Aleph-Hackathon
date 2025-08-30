@@ -274,7 +274,7 @@ export default function ProfilePage() {
                 DataChain
               </span>
             </div>
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden md:flex fixed-center items-center space-x-6">
               <Link
                 href="/"
                 className="text-muted-foreground hover:text-foreground transition-colors"
