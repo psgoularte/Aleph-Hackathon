@@ -1,9 +1,21 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
+import { useState, useEffect } from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
+// Hooks do Wagmi e utilitário do Viem
+import {
+  useAccount,
+  useSendTransaction,
+  useWaitForTransactionReceipt,
+} from "wagmi";
+import { parseEther } from "viem";
+
+// Componente do RainbowKit
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+
+// Componentes da UI (shadcn/ui)
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,55 +23,73 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { CreditCard, Shield, Zap } from "lucide-react"
-import { paymentProcessor, type PaymentData } from "@/lib/payment"
+} from "@/components/ui/dialog";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CreditCard, Shield, Zap } from "lucide-react";
 
 interface PaymentDialogProps {
-  datasetTitle: string
-  price: string
-  datasetId: string
-  sellerId: string
-  children: React.ReactNode
+  datasetTitle: string;
+  // IMPORTANTE: O preço agora deve ser em ETH (ex: "0.01")
+  price: string;
+  datasetId: string;
+  // O sellerId agora deve ser um endereço de carteira Ethereum (ex: "0x...")
+  sellerId: `0x${string}`;
+  children: React.ReactNode;
 }
 
-export function PaymentDialog({ datasetTitle, price, datasetId, sellerId, children }: PaymentDialogProps) {
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [paymentComplete, setPaymentComplete] = useState(false)
-  const [transactionId, setTransactionId] = useState<string>("")
+export function PaymentDialog({
+  datasetTitle,
+  price,
+  datasetId,
+  sellerId,
+  children,
+}: PaymentDialogProps) {
+  const { isConnected } = useAccount();
+  const [paymentComplete, setPaymentComplete] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handlePayment = async () => {
-    setIsProcessing(true)
+  // Hook para enviar a transação
+  const { data: hash, isPending, sendTransaction } = useSendTransaction();
 
-    const paymentData: PaymentData = {
-      amount: Number.parseFloat(price.replace("$", "")),
-      currency: "USD",
-      datasetId,
-      buyerId: "current_user_id", // In real app, get from auth context
-      sellerId,
+  // Hook para esperar a confirmação da transação na blockchain
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    });
+
+  // Efeito para atualizar o estado quando a transação for confirmada
+  useEffect(() => {
+    if (isConfirmed) {
+      setPaymentComplete(true);
     }
+  }, [isConfirmed]);
 
-    const result = await paymentProcessor.processPayment(paymentData)
+  // Função que é chamada ao clicar no botão de pagar
+  const handlePayment = () => {
+    if (!price || !sellerId) return;
 
-    if (result.success) {
-      setPaymentComplete(true)
-      setTransactionId(result.transactionId || "")
-    }
+    const value = parseEther(price); // Converte o valor de ETH para Wei
+    sendTransaction({ to: sellerId, value });
+  };
 
-    setIsProcessing(false)
-  }
+  const isProcessing = isPending || isConfirming;
 
+  // Tela de Sucesso
   if (paymentComplete) {
     return (
-      <Dialog>
-        <DialogTrigger asChild>{children}</DialogTrigger>
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-center text-green-600">Payment Successful!</DialogTitle>
+            <DialogTitle className="text-center text-green-600">
+              Payment Successful!
+            </DialogTitle>
             <DialogDescription className="text-center">
               Your purchase has been completed and stored on the blockchain.
             </DialogDescription>
@@ -69,9 +99,9 @@ export function PaymentDialog({ datasetTitle, price, datasetId, sellerId, childr
               <CardContent className="pt-6">
                 <div className="text-center space-y-2">
                   <Shield className="h-12 w-12 text-green-600 mx-auto" />
-                  <p className="font-medium">Transaction ID: {transactionId}</p>
-                  <p className="text-sm text-muted-foreground">
-                    Your data access has been granted and the transaction is recorded on the blockchain.
+                  <p className="font-medium">Transaction Hash:</p>
+                  <p className="text-xs text-muted-foreground break-all">
+                    {hash}
                   </p>
                 </div>
               </CardContent>
@@ -80,16 +110,21 @@ export function PaymentDialog({ datasetTitle, price, datasetId, sellerId, childr
           </div>
         </DialogContent>
       </Dialog>
-    )
+    );
   }
 
+  // Tela de Pagamento
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <DialogTrigger asChild onClick={() => setDialogOpen(true)}>
+        {children}
+      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Complete Purchase</DialogTitle>
-          <DialogDescription>Secure blockchain payment for {datasetTitle}</DialogDescription>
+          <DialogDescription>
+            Secure blockchain payment for {datasetTitle}
+          </DialogDescription>
         </DialogHeader>
         <div className="space-y-6">
           <Card>
@@ -97,50 +132,49 @@ export function PaymentDialog({ datasetTitle, price, datasetId, sellerId, childr
               <CardTitle className="text-lg">{datasetTitle}</CardTitle>
               <CardDescription>
                 <Badge variant="secondary" className="text-lg">
-                  {price}
+                  {price} ETH
                 </Badge>
               </CardDescription>
             </CardHeader>
           </Card>
-
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="wallet">Wallet Address</Label>
-              <Input id="wallet" placeholder="0x..." />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="expiry">Expiry Date</Label>
-                <Input id="expiry" placeholder="MM/YY" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="cvc">CVC</Label>
-                <Input id="cvc" placeholder="123" />
-              </div>
-            </div>
-          </div>
 
           <div className="flex items-center space-x-2 text-sm text-muted-foreground">
             <Shield className="h-4 w-4" />
             <span>Secured by blockchain technology</span>
           </div>
 
-          <Button className="w-full" onClick={handlePayment} disabled={isProcessing}>
-            {isProcessing ? (
-              <>
-                <Zap className="h-4 w-4 mr-2 animate-spin" />
-                Processing Payment...
-              </>
-            ) : (
-              <>
-                <CreditCard className="h-4 w-4 mr-2" />
-                Pay {price}
-              </>
-            )}
-          </Button>
+          {isConnected ? (
+            <Button
+              className="w-full"
+              onClick={handlePayment}
+              disabled={isProcessing}
+            >
+              {isPending && (
+                <>
+                  <Zap className="h-4 w-4 mr-2 animate-pulse" />
+                  Check your wallet...
+                </>
+              )}
+              {isConfirming && (
+                <>
+                  <Zap className="h-4 w-4 mr-2 animate-spin" />
+                  Processing Transaction...
+                </>
+              )}
+              {!isProcessing && (
+                <>
+                  <CreditCard className="h-4 w-4 mr-2" />
+                  Pay {price} ETH
+                </>
+              )}
+            </Button>
+          ) : (
+            <div className="flex justify-center">
+              <ConnectButton />
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
