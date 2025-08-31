@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-const Provider = dynamic(() => import("./provider"), {
+const Provider = dynamic(() => import("./providers/provider"), {
   ssr: false,
   loading: () => <div>Loading providers...</div>,
 });
